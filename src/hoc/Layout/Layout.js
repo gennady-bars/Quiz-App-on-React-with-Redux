@@ -5,6 +5,7 @@ import classes from './Layout.module.css'
 import MenuToggle from '../../components/Navigation/MenuToggle/MenuToggle';
 import Drawer from '../../components/Navigation/Drawer/Drawer'
 import { connect } from 'react-redux';
+import UserName from '../../components/Navigation/UserName/UserName';
 
 class Layout extends Component {
     
@@ -27,6 +28,9 @@ class Layout extends Component {
     render() {
         return (
             <div className={classes.Layout}>
+                <UserName 
+                    name={this.props.name}
+                />
                 <Drawer 
                     isOpen={this.state.menu}
                     onClose={this.menuCloseHandler}
@@ -48,7 +52,8 @@ class Layout extends Component {
 function mapStateToProps(state) {
     return {
         isAuthenticated: !!state.auth.token,
-        isAdmin: state.auth.admin
+        isAdmin: state.auth.admin,
+        name: state.auth.name
     }
 }
 

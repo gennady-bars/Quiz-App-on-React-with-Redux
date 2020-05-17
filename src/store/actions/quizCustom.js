@@ -1,21 +1,22 @@
 import axios from '../../axios/axios-quiz'
 import { 
-    FETCH_QUIZES_START, 
-    FETCH_QUIZES_SUCCESS, 
-    FETCH_QUIZES_ERROR, 
-    FETCH_QUIZ_SUCCESS,
-    QUIZ_SET_STATE,
-    FINISH_QUIZ,
-    QUIZ_NEXT_QUESTION,
-    QUIZ_RETRY,
+    FETCH_CUSTOM_QUIZES_START, 
+    FETCH_CUSTOM_QUIZES_SUCCESS, 
+    FETCH_CUSTOM_QUIZES_ERROR, 
+    FETCH_CUSTOM_QUIZ_SUCCESS,
+    CUSTOM_QUIZ_SET_STATE,
+    FINISH_CUSTOM_QUIZ,
+    CUSTOM_QUIZ_NEXT_QUESTION,
+    CUSTOM_QUIZ_RETRY,
 } from './actionTypes'
 
 export function fetchQuizes() {
     return async (dispatch) => {
         dispatch(fetchQuizesStart())
+        const userId = localStorage.getItem('userId')
         
         try {
-            let response = await axios.get('/quizes.json')
+            let response = await axios.get(`/customQuizes/${userId}.json`)
             const quizes = []
 
             Object.keys(response.data).forEach((key, index) => {
@@ -35,8 +36,10 @@ export function fetchQuizes() {
 export function fetchQuizById(quizId) {
     return async (dispatch) => {
         dispatch(fetchQuizesStart())
+        const userId = localStorage.getItem('userId')
+
         try {
-            const response = await axios.get(`/quizes/${quizId}.json`)
+            const response = await axios.get(`/customQuizes/${userId}/${quizId}.json`)
             const quiz = response.data;
 
             dispatch(fetchQuizSuccess(quiz))
@@ -48,34 +51,34 @@ export function fetchQuizById(quizId) {
 
 export function fetchQuizSuccess(quiz) {
     return {
-        type: FETCH_QUIZ_SUCCESS,
+        type: FETCH_CUSTOM_QUIZ_SUCCESS,
         quiz
     }
 }
 
 export function fetchQuizesStart() {
     return {
-        type: FETCH_QUIZES_START
+        type: FETCH_CUSTOM_QUIZES_START
     }
 }
 
 export function fetchQuizesSuccess(quizes) {
     return {
-        type: FETCH_QUIZES_SUCCESS,
+        type: FETCH_CUSTOM_QUIZES_SUCCESS,
         quizes
     }
 }
 
 export function fetchQuizesError(error) {
     return {
-        type: FETCH_QUIZES_ERROR,
+        type: FETCH_CUSTOM_QUIZES_ERROR,
         error
     }
 }
 
 export function quizSetState(answerState, results) {
     return {
-        type: QUIZ_SET_STATE,
+        type: CUSTOM_QUIZ_SET_STATE,
         answerState,
         results
     }
@@ -83,26 +86,26 @@ export function quizSetState(answerState, results) {
 
 export function finishQuiz() {
     return {
-        type: FINISH_QUIZ,
+        type: FINISH_CUSTOM_QUIZ,
     }
 }
 
 export function quizNextQuestion(number) {
     return {
-        type: QUIZ_NEXT_QUESTION,
+        type: CUSTOM_QUIZ_NEXT_QUESTION,
         number
     }
 }
 
 export function retryQuiz() {
     return {
-        type: QUIZ_RETRY,
+        type: CUSTOM_QUIZ_RETRY,
     }
 }
 
 export function quizAnswerClick(answerId) {
     return (dispatch, getState) => {
-        const state = getState().quiz
+        const state = getState().quizCustom
         if (state.answerState) {
             const key = Object.keys(state.answerState)[0]
             if (state.answerState[key] === 'success') {

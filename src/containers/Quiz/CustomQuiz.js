@@ -5,9 +5,9 @@ import classes from './Quiz.module.css'
 import ActiveQuiz from '../../components/ActiveQuiz/ActiveQuiz';
 import FinishedQuiz from '../../components/FinishedQuiz/FinishedQuiz';
 import Loader from '../../components/UI/Loader/Loader';
-import {fetchQuizById, quizAnswerClick, retryQuiz} from '../../store/actions/quiz'
+import {fetchQuizById, quizAnswerClick, retryQuiz} from '../../store/actions/quizCustom'
 
-class Quiz extends React.Component {
+class CustomQuiz extends React.Component {
 
    componentDidMount() { 
         this.props.fetchQuizById(this.props.match.params.id)
@@ -31,6 +31,7 @@ class Quiz extends React.Component {
                                 results={this.props.results}
                                 quiz={this.props.quiz}
                                 onRetry={this.props.retryQuiz}
+                                to={'/custom-quizes'}
                              />
                             : <ActiveQuiz 
                                 answers={this.props.quiz[this.props.activeQuestion].answers}
@@ -49,12 +50,12 @@ class Quiz extends React.Component {
 
 function mapStateToProps(state) {
     return {
-        results: state.quiz.results,
-        isFinished: state.quiz.isFinished,
-        activeQuestion: state.quiz.activeQuestion,
-        answerState: state.quiz.answerState,
-        quiz: state.quiz.quiz,
-        loading: state.quiz.loading,
+        results: state.quizCustom.results,
+        isFinished: state.quizCustom.isFinished,
+        activeQuestion: state.quizCustom.activeQuestion,
+        answerState: state.quizCustom.answerState,
+        quiz: state.quizCustom.quiz,
+        loading: state.quizCustom.loading,
         userName: state.auth.name
     }
 }
@@ -67,6 +68,4 @@ function mapDispatchToProps(dispatch) {
     }
 }
 
-
-
-export default connect(mapStateToProps, mapDispatchToProps)(Quiz);
+export default connect(mapStateToProps, mapDispatchToProps)(CustomQuiz);

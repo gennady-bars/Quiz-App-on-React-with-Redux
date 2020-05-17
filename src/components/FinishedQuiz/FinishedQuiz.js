@@ -35,7 +35,7 @@ const FinishedQuiz = (props) => {
                     >
                     Повторить
                 </Button>
-                <Link to={'/'}>
+                <Link to={props.to || '/'}>
                     <Button
                         type={'success'}
                     >

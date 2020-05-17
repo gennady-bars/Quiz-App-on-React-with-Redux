@@ -9,6 +9,10 @@ import Auth from './containers/Auth/Auth'
 import QuizCreator from './containers/QuizCreator/QuizCreator'
 import Logout from './components/Logout/Logout';
 import {autoLogin} from './store/actions/auth'
+import { fetchQuizes } from './store/actions/quiz';
+import CustomQuizList from './containers/QuizList/CustomQuizList';
+import CustomQuizCreator from './containers/QuizCreator/CustomQuizCreator';
+import CustomQuiz from './containers/Quiz/CustomQuiz';
 
 
 
@@ -33,6 +37,9 @@ class App extends Component {
       routes = (
         <Switch>
           <Route path='/quiz/:id' component={Quiz}/>
+          <Route path='/customQuiz/:id' component={CustomQuiz}/>
+          <Route path='/custom-quiz-creator' component={CustomQuizCreator}/>
+          <Route path='/custom-quizes' component={CustomQuizList}/>
           <Route path='/logout' component={Logout}/>
           <Route path='/' exact component={QuizList}/>
           <Redirect to='/'/>
@@ -69,7 +76,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    autoLogin: () => dispatch(autoLogin())
+    autoLogin: () => dispatch(autoLogin()),
+    fetchQuizes: (isCustom) => dispatch(fetchQuizes(isCustom))
   }
 }
 

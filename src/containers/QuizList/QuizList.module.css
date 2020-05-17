@@ -9,12 +9,16 @@
 
 .QuizList h1 {
     color: #fff;
-
+    margin-left: 10%;
+}
+.QuizList h3 {
+    color: #fff;
+    margin-left: 10%;
 }
 
 .QuizList ul {
     list-style: none;
-    margin: 0;
+    margin-left: 10%;
     padding: 0;
 }
 
