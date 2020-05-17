@@ -8,7 +8,7 @@ I've made 4 reducers for 4 different Container-Components in React which used th
 * QuizList 
 * Authorisation 
 * QuizCreation (only with admin access)
-* CustomQuizCreation (only after sing in)
+* CustomQuizCreation (only after a user signs in)
 
 
 
