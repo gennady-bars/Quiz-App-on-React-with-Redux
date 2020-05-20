@@ -10,8 +10,8 @@ I've made 4 reducers for 4 different Container-Components in React which used th
 * QuizCreation (only with admin access)
 * CustomQuizCreation (only after a user signs in)
 
-You can create your own tests or quizes if you sign up / sing in.
-If not - you can just pass my English tests available without registration.
+### You can create your own tests or quizes if you sign up / sing in.
+###### If not - you can just pass my English tests available without registration.
 
 
 
