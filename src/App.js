@@ -1,84 +1,35 @@
-import React, { Component } from 'react';
-import {Route, Switch, Redirect, withRouter} from 'react-router-dom'
-import { connect } from 'react-redux';
+import React, { Component } from "react";
+import { withRouter } from "react-router-dom";
+import { connect } from "react-redux";
 
-import Layout from './hoc/Layout/Layout'
-import Quiz from './containers/Quiz/Quiz'
-import QuizList from './containers/QuizList/QuizList'
-import Auth from './containers/Auth/Auth'
-import QuizCreator from './containers/QuizCreator/QuizCreator'
-import Logout from './components/Logout/Logout';
-import {autoLogin} from './store/actions/auth'
-import { fetchQuizes } from './store/actions/quiz';
-import CustomQuizList from './containers/QuizList/CustomQuizList';
-import CustomQuizCreator from './containers/QuizCreator/CustomQuizCreator';
-import CustomQuiz from './containers/Quiz/CustomQuiz';
-
-
+import Layout from "./hoc/Layout/Layout";
+import { autoLogin } from "./store/actions/auth";
+import createRoutes from "./routes";
 
 class App extends Component {
-
   componentDidMount() {
-    this.props.autoLogin()
+    this.props.autoLogin();
   }
-  
+
   render() {
+    const { isAuthenticated, isAdmin } = this.props;
+    const routes = createRoutes(isAuthenticated, isAdmin);
 
-    let routes = (
-      <Switch>
-        <Route path='/auth' component={Auth}/>
-        <Route path='/quiz/:id' component={Quiz}/>
-        <Route path='/' exact component={QuizList}/>
-        <Redirect to='/'/>
-      </Switch>
-    )
-
-    if (this.props.isAuthenticated) {
-      routes = (
-        <Switch>
-          <Route path='/quiz/:id' component={Quiz}/>
-          <Route path='/customQuiz/:id' component={CustomQuiz}/>
-          <Route path='/custom-quiz-creator' component={CustomQuizCreator}/>
-          <Route path='/custom-quizes' component={CustomQuizList}/>
-          <Route path='/logout' component={Logout}/>
-          <Route path='/' exact component={QuizList}/>
-          <Redirect to='/'/>
-        </Switch>
-      )
-    }
-
-    if (this.props.isAdmin) {
-      routes = (
-        <Switch>
-          <Route path='/quiz-creator' component={QuizCreator}/>
-          <Route path='/quiz/:id' component={Quiz}/>
-          <Route path='/logout' component={Logout}/>
-          <Route path='/' exact component={QuizList}/>
-          <Redirect to='/'/>
-        </Switch>
-      )
-    }
-
-    return (
-      <Layout>
-        {routes}
-      </Layout>
-    );
+    return <Layout>{routes}</Layout>;
   }
 }
 
 function mapStateToProps(state) {
   return {
     isAuthenticated: !!state.auth.token,
-    isAdmin: state.auth.admin
-  }
+    isAdmin: state.auth.admin,
+  };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     autoLogin: () => dispatch(autoLogin()),
-    fetchQuizes: (isCustom) => dispatch(fetchQuizes(isCustom))
-  }
+  };
 }
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));
