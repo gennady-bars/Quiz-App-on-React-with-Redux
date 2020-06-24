@@ -15,7 +15,7 @@ I've made 4 reducers for 4 different Container-Components in React which used th
 ### You can create your own tests or quizes if you sign up / sing in.
 Вы можете создавать свои собственные тесты и вопросники, если Вы зарегистрируетесь / войдете.
 #### If not - you can just pass my English tests available without registration.
-Если же нет - то можно просто пройти предложенные тесты английского языка
+Если же нет - то можно просто пройти предложенные тесты английского языка без регистрации.
 
 
 
