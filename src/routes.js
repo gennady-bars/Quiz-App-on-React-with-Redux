@@ -1,4 +1,5 @@
 import { Route, Switch, Redirect } from "react-router-dom";
+import React from "react";
 
 import Quiz from "./containers/Quiz/Quiz";
 import QuizList from "./containers/QuizList/QuizList";
